@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Mentors</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<style>
+    /* General Styles */
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f9;
+        color: #333;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    h1 {
+        color: #1f6f8b;
+        margin-bottom: 20px;
+    }
+    
+    /* Form Styles */
+    form {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 20px;
+    }
+    
+    input[type="text"] {
+        padding: 10px;
+        border: 2px solid #1f6f8b;
+        border-radius: 5px;
+        width: 300px;
+    }
+    
+    button[type="submit"] {
+        padding: 10px 20px;
+        margin-left: 10px;
+        border: none;
+        border-radius: 5px;
+        background-color: #28b5b5;
+        color: white;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+    
+    button[type="submit"]:hover {
+        background-color: #1f6f8b;
+    }
+    
+    /* Table Styles */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        background-color: white;
+        text-align: left;
+    }
+    
+    thead {
+        background-color: #1f6f8b;
+        color: white;
+    }
+    
+    th, td {
+        padding: 15px;
+        border-bottom: 1px solid #ddd;
+        position: relative;
+    }
+    
+    /* Highlight Line Between Rows */
+    tbody tr {
+        border-top: 3px solid #e5e5e5;
+    }
+    
+    tbody tr:first-child {
+        border-top: none;
+    }
+    
+    tbody tr:hover {
+        background-color: #d0e4617e;
+    }
+    
+    th {
+        text-align: left;
+    }
+    
+    /* Button Styles in Table */
+    form {
+        display: inline-block;
+    }
+    
+    button[name="edit"],
+    button[name="delete"] {
+        padding: 5px 10px;
+        margin-right: 5px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+    
+    button[name="edit"] {
+        background-color: #ffcd3c;
+        color: white;
+    }
+    
+    button[name="edit"]:hover {
+        background-color: #ffb400;
+    }
+    
+    button[name="delete"] {
+        background-color: #f45b69;
+        color: white;
+    }
+    
+    button[name="delete"]:hover {
+        background-color: #e33e4a;
+    }
+    
+    /* Back to Dashboard Button */
+    a.button {
+        display: inline-block;
+        padding: 10px 20px;
+        border-radius: 5px;
+        background-color: #1f6f8b;
+        color: white;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+    }
+    
+    a.button:hover {
+        background-color: #28b5b5;
+    }
+    
+</style>
+<body>
+    
+    <h1>Batch Mentors</h1>
+    
+    <form method="GET" action="{{ url_for('view_mentors') }}">
+        <input type="text" name="search" placeholder="Search...">
+        <button type="submit">Search</button>
+    </form>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Sr.No.</th>
+                <th>Full Name</th>
+                <th>E-Mail</th>
+                <th>Contact No.</th>
+                <th>Password</th>
+                <th>Batch Assigned</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for mentor in mentors %}
+            <tr>
+                <td>{{ mentor['Sr.No.'] }}</td>
+                <td>{{ mentor['Full Name'] }}</td>
+                <td>{{ mentor['E-Mail'] }}</td>
+                <td>{{ mentor['Contact No.'] }}</td>
+                <td>{{ mentor['Password'] }}</td>
+                <td>{{ mentor['Batch Assigned'] }}</td>
+                <td>
+                    <form method="post" action="{{ url_for('view_mentors') }}">
+                        <!-- Edit Button -->
+                        <input type="hidden" name="edit_id" value="{{ mentor['Sr.No.'] }}">
+                        <button type="submit" name="edit">Edit</button>
+                        
+                        <!-- Delete Button -->
+                        <input type="hidden" name="delete_id" value="{{ mentor['Sr.No.'] }}">
+                        <button type="submit" name="delete">Delete</button>
+                    </form>
+                    
+                    
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ url_for('admin_dashboard') }}" class="button">Back to Dashboard</a>
+</body>
+</html>

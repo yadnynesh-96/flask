@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<style>
+    /* Global styles */
+    body-1 {
+        font-family: Arial, sans-serif;
+        background-color: #f7f7f7;
+        color: #333;
+        margin: 0;
+        padding: 20px;
+    }
+
+    h2, h3 {
+        color: #4a4a4a;
+    }
+
+    form {
+        margin-bottom: 20px;
+        background-color: #fff;
+        padding: 10px;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        display: flex;
+        align-items: center;
+    }
+
+    label, input[type="text"], select, input[type="submit"] {
+        display: inline-block;
+        margin-right: 10px;
+    }
+
+    label {
+        font-weight: bold;
+        font-size: 12px;
+    }
+
+    input[type="text"], select {
+        padding: 4px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 12px;
+        width: auto;
+    }
+
+    input[type="submit"] {
+        background-color: #336699;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        padding: 4px 8px;
+        font-size: 12px;
+        border-radius: 4px;
+        transition: background-color 0.3s ease;
+    }
+
+    input[type="submit"]:hover {
+        background-color: #274b73;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        font-size: 12px; /* Reduced font size */
+    }
+
+    th, td {
+        padding: 4px; /* Reduced padding */
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    th, td {
+        padding: 4px; /* Reduced padding */
+        text-align: left;
+        border-bottom: 2px solid #000000;
+    }
+
+    th {
+        background-color: #6b994b;
+        color: white;
+    }
+
+    .highlight {
+        background-color: #e9e198 !important;
+    }
+
+    .actions-form {
+        display: inline-block;
+    }
+
+    .logout {
+        margin-top: 20px;
+        display: inline-block;
+        background-color: #d32f2f;
+        color: white;
+        padding: 6px 12px;
+        text-decoration: none;
+        border-radius: 4px;
+        font-size: 12px;
+        transition: background-color 0.3s ease;
+    }
+
+    .logout:hover {
+        background-color: #b71c1c;
+    }
+    
+</style>
+<body>
+    <div class="container">
+        <h1>Admin Dashboard</h1>
+        <p>Welcome, {{ admin['name'] }} ({{ admin['post'] }})</p>
+        <form action="{{ url_for('admin_logout') }}" method="POST">
+            <input type="submit" value="Logout">
+        </form>
+        <!-- admin_dashboard.html -->
+        <a href="{{ url_for('add_batch_mentor') }}">Add Batch Mentor</a>
+
+        <!-- Button to view Batch Mentor data -->
+        <a href="{{ url_for('view_mentors') }}" class="button">View Mentors</a>
+
+        <form action="{{ url_for('admin_home_decor') }}" method="GET">
+            <input type="submit" value="Manage Home Decor">
+        </form>
+        <h2>Student Records</h2>
+        <form action="{{ url_for('admin_dashboard') }}" method="POST">
+            <input type="text" name="search" placeholder="Search students"  >
+            <select  name="search_column" onchange="highlightColumn()">
+            <option value="all">View all</option>
+            <option value="batch">Batch</option>
+            <option value="name">Name</option>
+            <option value="mobile">Mobile</option>
+            <option value="email">Email</option>
+            <option value="address">State</option>
+            <option value="district">District</option>
+            <option value="subdivision">Subdivision</option>
+            <option value="country">Country</option>
+            <option value="company">Company</option>
+            <option value="sector">Sector</option>
+            <option value="areawise">Area</option>
+            <option value="designation">Designation</option>
+            <option value="domestic">Domestic</option>
+            <option value="international">International</option>
+            <!-- Add more options based on columns in your dataset -->
+            </select>
+            <input type="submit" name="search" value="Search">
+        </form>
+        <form action="{{ url_for('admin_dashboard') }}" method="POST">
+            <input type="hidden" name="delete" value="true">
+            <input type="text" name="email" placeholder="Enter student email to delete">
+            <input type="submit" value="Delete Student">
+        </form>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Batch</th>
+                    <th>Name</th>
+                    <th>Mobile</th>
+                    <th>Email</th>
+                    <th>State</th>
+                    <th>District</th>
+                    <th>Subdivision</th>
+                    <th>Pin</th>
+                    <th>Country</th>
+                    <th>Company</th>
+                    <th>Sector</th>
+                    <th>Area</th>
+                    <th>Designation</th>
+                    <th>Domestic</th>
+                    <th>International</th>
+                    <th>LinkedIn</th>
+                    <th>Facebook</th>
+                    <th>Instagram</th>
+                    <th>Profile Picture</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for student in students %}
+                <tr>
+                    <td>{{ student['batch'] }}</td>
+                    <td>{{ student['name'] }}</td>
+                    <td>{{ student['mobile'] }}</td>
+                    <td>{{ student['email'] }}</td>
+                    <td>{{ student['address'] }}</td>
+                    <td>{{ student['district'] }}</td>
+                    <td>{{ student['subdivision'] }}</td>
+                    <td>{{ student['pin'] }}</td>
+                    <td>{{ student['country'] }}</td>
+                    <td>{{ student['company'] }}</td>
+                    <td>{{ student['sector'] }}</td>
+                    <td>{{ student['areawise'] }}</td>
+                    <td>{{ student['designation'] }}</td>
+                    <td>{{ student['domestic'] }}</td>
+                    <td>{{ student['international'] }}</td>
+                    <td>{{ student['linkedin'] }}</td>
+                    <td>{{ student['facebook'] }}</td>
+                    <td>{{ student['instagram'] }}</td>
+                    <td>{% if student.profile_pic %}<img src="{{ url_for('static', filename=student.profile_pic) }}" width="50" height="50">{% endif %}</td>
+                    <td>
+                        <form action="{{ url_for('admin_dashboard') }}" method="POST" style="display:inline;">
+                            <input type="hidden" name="email" value="{{ student['email'] }}">
+                            <input type="submit" name="edit" value="Edit">
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <script>
+            function highlightColumn() {
+                // Get the selected column index
+                const selectedColumn = document.getElementById('search_column').value;
+    
+                // Remove any existing highlights
+                const rows = document.querySelectorAll('#mentorTable tr');
+                rows.forEach(row => {
+                    row.querySelectorAll('td, th').forEach(cell => {
+                        cell.classList.remove('highlight');
+                    });
+                });
+    
+                // Highlight the corresponding column based on selected option value
+                const columnMap = {
+                    'batch': 1,
+                    'name': 2,
+                    'mobile': 4,
+                    'district': 8,
+                    'subdivision': 9,
+                    'address': 7,
+                    'country': 12,
+                    'sector': 13,
+                    'designation': 5,
+                    'email': 3,
+                };
+    
+                const columnIndex = columnMap[selectedColumn];
+    
+                if (columnIndex !== undefined) {
+                    rows.forEach(row => {
+                        const cell = row.querySelectorAll('td, th')[columnIndex];
+                        if (cell) {
+                            cell.classList.add('highlight');
+                        }
+                    });
+                }
+            }
+        </script>
+    </div>
+</body>
+</html>

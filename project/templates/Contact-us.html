@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8f9fa;
+            color: #343a40;
+        }
+
+        .contact-container {
+            padding: 60px 0;
+        }
+
+        .contact-card {
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin: 20px 0;
+        }
+
+        .contact-card h2 {
+            margin-bottom: 30px;
+            font-size: 24px;
+            font-weight: 600;
+            color: #333333;
+        }
+
+        .contact-card .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .contact-card .contact-item i {
+            font-size: 24px;
+            color: #007bff;
+            margin-right: 15px;
+        }
+
+        .contact-card .contact-item span {
+            font-size: 16px;
+        }
+
+        .contact-card .contact-item a {
+            text-decoration: none;
+            color: #007bff;
+        }
+
+        .contact-card .contact-item a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 767px) {
+            .contact-card {
+                padding: 20px;
+            }
+
+            .contact-card h2 {
+                font-size: 20px;
+            }
+
+            .contact-card .contact-item i {
+                font-size: 20px;
+            }
+
+            .contact-card .contact-item span {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container contact-container">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <div class="contact-card">
+                    <h2>Contact Us</h2>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>1234 Elm Street, Springfield, IL 62704</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone-alt"></i>
+                        <span><a href="tel:+1234567890">+1 (234) 567-890</a></span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-fax"></i>
+                        <span><a href="fax:+1234567890">+1 (234) 567-890</a></span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <span><a href="mailto:info@example.com">info@example.com</a></span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-globe"></i>
+                        <span><a href="https://www.example.com" target="_blank">www.example.com</a></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Include jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Include Bootstrap JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+
+{% endblock %}

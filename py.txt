@@ -1,0 +1,51 @@
+@app.route('/profile', methods=['GET', 'POST'])
+def profile():
+    if 'user' not in session:
+        return redirect(url_for('login'))
+
+    if request.method == 'POST':
+        if 'edit' in request.form:
+            session['edit_mode'] = not session.get('edit_mode', False)
+        else:
+            email = session['user']['email']
+            df = pd.read_excel(students_excel_file)
+
+            new_data = {
+                'batch': request.form.get('batch', session['user']['batch']),
+                'name': request.form.get('name', session['user']['name']),
+                'mobile': request.form.get('mobile', session['user']['mobile']),
+                'password': request.form.get('password', session['user']['password']),
+                'designation': request.form.get('designation', session['user']['designation']),
+                'company': request.form.get('company', session['user']['company']),
+                'address': request.form.get('address', session['user']['address']),
+                'district': request.form.get('district', session['user']['district']),
+                'subdivision': request.form.get('subdivision', session['user']['subdivision']),
+                'pin': request.form.get('pin', session['user']['pin']),
+                'areawise': request.form.get('areawise', session['user']['areawise']),
+                'country': request.form.get('country', session['user']['country']),
+                'sector': request.form.get('sector', session['user']['sector']),
+                'international': request.form.get('international', session['user']['international']),
+                'domestic': request.form.get('domestic', session['user']['domestic']),
+                'linkedin': request.form.get('linkedin', session['user']['linkedin']),
+                'facebook': request.form.get('facebook', session['user']['facebook']),
+                'instagram': request.form.get('instagram', session['user']['instagram']),
+                'profile_pic': session['user']['profile_pic']  # Preserve existing profile pic
+            }
+
+            # Handle profile picture upload
+            if 'profile_pic' in request.files:
+                file = request.files['profile_pic']
+                if file.filename != '':
+                    filepath = os.path.join(image_dir, file.filename)
+                    file.save(filepath)
+                    new_data['profile_pic'] = f'images/{file.filename}'
+
+            df.update(pd.DataFrame([new_data], index=[df[df['email'] == email].index[0]]))
+            df.to_excel(students_excel_file, index=False)
+
+            session['user'] = new_data
+            session['edit_mode'] = False
+            flash('Profile updated successfully!')
+            
+
+    return render_template('profile.html', user=session['user'], edit_mode=session.get('edit_mode', False))

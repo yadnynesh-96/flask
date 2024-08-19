@@ -1,0 +1,689 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Web Page with Carousel</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Play&display=swap" rel="stylesheet"> 
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #ffffff;
+            color: #333;
+            overflow-x: hidden;
+            margin: 0;
+        }
+
+        .header-img {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+        }
+
+        .header-img img {
+            width: 100%;
+            height: 150px;
+            
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .carousel {
+            position: relative;
+            max-width: 80%;
+            margin: 20px auto;
+            overflow: hidden;
+            border-radius: 10px;
+            border: 3px solid rgba(248, 248, 248, 0.979);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .carousel-container {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .carousel-slide {
+            min-width: 100%;
+            position: relative;
+        }
+
+        .carousel-slide img {
+            width: 100%;
+            height: 650px;
+            object-fit: cover;
+        }
+
+        .carousel-caption {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            background-color: rgba(0, 0, 0, 0.6);
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            max-width: 60%;
+        }
+
+        .carousel-caption h2 {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        .carousel-caption p {
+            font-size: 16px;
+        }
+
+        .carousel-control {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 8px;
+            cursor: pointer;
+            z-index: 100;
+        }
+
+        .carousel-control.prev {
+            left: 10px;
+        }
+
+        .carousel-control.next {
+            right: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .carousel {
+                max-width: 95%;
+            }
+
+            .carousel-caption {
+                max-width: 80%;
+            }
+
+            .carousel-caption h2 {
+                font-size: 18px;
+            }
+
+            .carousel-caption p {
+                font-size: 14px;
+            }
+        }
+
+        .about-section {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 50px;
+            background-color: #f9f9f9;
+        }
+
+        .about-section img {
+            width: 50%;
+            height: auto;
+            border-radius: 10px;
+            object-fit: cover;
+        }
+
+        .about-text {
+            width: 45%;
+        }
+
+        .about-text h2 {
+            font-size: 36px;
+            margin-bottom: 15px;
+        }
+
+        .about-text p {
+            font-size: 18px;
+            line-height: 1.8;
+            color: #555;
+        }
+
+        .blog-title {
+            color: #222;
+            padding-bottom: 0.5rem;
+            font-size: 1.25rem;
+            font-weight: 500;
+        }
+
+        .blog-time {
+            font-size: 0.875rem;
+            color: #fff;
+            background-color: #1e76c3;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.5rem;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        .description {
+            color: #222;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .my-format-container {
+            width: 1142px;
+            margin: 0 auto;
+        }
+        
+       
+        
+        .my-courses-box {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-align: start;
+            -ms-flex-align: start;
+            align-items: flex-start;
+            -ms-flex-wrap: wrap;
+            flex-wrap: wrap;
+        
+            padding: 50px 0;
+        }
+        
+        .my-courses-item {
+            -ms-flex-preferred-size: calc(33.33333% - 30px);
+            flex-basis: calc(33.33333% - 30px);
+        
+            margin: 0 15px 30px;
+        
+            overflow: hidden;
+        
+            border-radius: 28px;
+        }
+        
+        .my-courses-item-link {
+            display: block;
+            padding: 30px 20px;
+            background-color: #121212;
+        
+            overflow: hidden;
+        
+            position: relative;
+            text-decoration: none; /* Remove underline */
+        }
+        
+        .my-courses-item-link:hover,
+        .my-courses-item-link:hover .my-courses-item-date {
+            text-decoration: none;
+            color: #FFF;
+        }
+        
+        .my-courses-item-link:hover .my-courses-item-bg {
+            -webkit-transform: scale(10);
+            -ms-transform: scale(10);
+            transform: scale(10);
+        }
+        
+        .my-courses-item-title {
+            min-height: 87px;
+            margin: 0 0 25px;
+        
+            overflow: hidden;
+        
+            font-weight: bold;
+            font-size: 30px;
+            color: #FFF;
+        
+            z-index: 2;
+            position: relative;
+        }
+        
+        .my-courses-item-date-box {
+            font-size: 18px;
+            color: #FFF;
+        
+            z-index: 2;
+            position: relative;
+        }
+        
+        .my-courses-item-date {
+            font-weight: bold;
+            color: #f9b234;
+        
+            -webkit-transition: color .5s ease;
+            -o-transition: color .5s ease;
+            transition: color .5s ease;
+        }
+        
+        .my-courses-item-bg {
+            height: 128px;
+            width: 128px;
+            background-color: #f9b234;
+        
+            z-index: 1;
+            position: absolute;
+            top: -75px;
+            right: -75px;
+        
+            border-radius: 50%;
+        
+            -webkit-transition: all .5s ease;
+            -o-transition: all .5s ease;
+            transition: all .5s ease;
+        }
+        
+        .my-courses-item:nth-child(2n) .my-courses-item-bg {
+            background-color: #3ecd5e;
+        }
+        
+        .my-courses-item:nth-child(3n) .my-courses-item-bg {
+            background-color: #e44002;
+        }
+        
+        .my-courses-item:nth-child(4n) .my-courses-item-bg {
+            background-color: #952aff;
+        }
+        
+        .my-courses-item:nth-child(5n) .my-courses-item-bg {
+            background-color: #cd3e94;
+        }
+        
+        .my-courses-item:nth-child(6n) .my-courses-item-bg {
+            background-color: #4c49ea;
+        }
+        
+        @media only screen and (max-width: 979px) {
+            .my-courses-item {
+                -ms-flex-preferred-size: calc(50% - 30px);
+                flex-basis: calc(50% - 30px);
+            }
+            .my-courses-item-title {
+                font-size: 24px;
+            }
+        }
+        
+        @media only screen and (max-width: 767px) {
+            .my-format-container {
+                width: 96%;
+            }
+        }
+        
+        @media only screen and (max-width: 639px) {
+            .my-courses-item {
+                -ms-flex-preferred-size: 100%;
+                flex-basis: 100%;
+            }
+            .my-courses-item-title {
+                min-height: 72px;
+                line-height: 1;
+        
+                font-size: 24px;
+            }
+            .my-courses-item-link {
+                padding: 22px 40px;
+            }
+            .my-courses-item-date-box {
+                font-size: 16px;
+            }
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Rubik', sans-serif;
+        }
+        
+        .latest-entries {
+            text-align: center;
+            padding: 2rem;
+            background-color: #f1f3f6;
+        }
+        
+        .cards-container {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .card {
+            width: 20rem;
+            background: #fff;
+            border-radius: 1rem;
+            padding: 1rem;
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 16px 24px rgba(0, 0, 0, 0.2);
+        }
+        
+        .card:nth-child(1) {
+            background-color: #ff880080;
+        }
+        
+        .card:nth-child(2) {
+            background-color: #0750557b;
+        }
+        
+        .card:nth-child(3) {
+            background-color: #0d653082;
+        }
+        
+        .card-img-holder {
+            width: 100%;
+            overflow: hidden;
+            border-radius: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .card-img-holder img {
+            width: 100%;
+            height: auto;
+            max-height: 12rem;
+            object-fit: cover;
+            border-radius: 1rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .card-img-holder img:hover {
+            transform: scale(1.05);
+        }
+        
+        .blog-title {
+            color: #22215B;
+            padding-bottom: 0.5rem;
+            font-size: 1.25rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        .card:hover .blog-title {
+            color: #5F7FFF;
+        }
+        
+        .blog-time {
+            font-size: 0.875rem;
+            color: #fff;
+            background-color: #1e76c3ef;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+            transition: background-color 0.3s ease;
+        }
+        
+        .card:hover .blog-time {
+            background-color: #3f414b8c;
+        }
+        
+        .description {
+            color: #22215B80;
+            font-size: 1rem;
+            text-align: justify;
+            transition: color 0.3s ease;
+        }
+        
+        .card:hover .description {
+            color: #22215B;
+        }
+        
+        @media (max-width: 768px) {
+            .cards-container {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+        
+    </style>
+</head>
+<body>
+
+    <!-- Header Image -->
+    <div class="header-img">
+        <img src="{{ url_for('static', filename='images/header-2.jpg') }}" alt="Header Image"> <!-- Replace with your header image path -->
+    </div>
+
+    <!-- Carousel -->
+    <div class="carousel">
+        <div class="carousel-container">
+            <div class="carousel-slide">
+                <img src="{{ url_for('static', filename='images/Img-1.jpg') }}" alt="Slide 1"> <!-- Replace with your image path -->
+                <div class="carousel-caption">
+                    <h2>Main Heading for Slide 1</h2>
+                    <p>Additional information or subheading goes here.</p>
+                </div>
+            </div>
+            <div class="carousel-slide">
+                <img src="{{ url_for('static', filename='images/Img-2.jpg') }}" alt="Slide 2"> <!-- Replace with your image path -->
+                <div class="carousel-caption">
+                    <h2>Main Heading for Slide 2</h2>
+                    <p>Additional information or subheading goes here.</p>
+                </div>
+            </div>
+            <div class="carousel-slide">
+                <img src="I{{ url_for('static', filename='images/Img-3.jpg') }}" alt="Slide 3"> <!-- Replace with your image path -->
+                <div class="carousel-caption">
+                    <h2>Main Heading for Slide 3</h2>
+                    <p>Additional information or subheading goes here.</p>
+                </div>
+            </div>
+            <!-- Carousel Controls -->
+            <button class="carousel-control prev">&#10094;</button>
+            <button class="carousel-control next">&#10095;</button>
+        </div>
+    </div>
+
+    <!-- About Section -->
+    <section class="about-section">
+        <img src="{{ url_for('static', filename='images/DeptImg.jpg') }}" alt="About Image">
+        <div class="about-text">
+            <h2>Electronic Department</h2>
+            <p>The Electronics Department at Dr. Vithalrao Vikhe Patil College of Engineering Ahmednagar offers a cutting-edge curriculum in electronics and communication engineering. Our modern labs and expert faculty provide students with hands-on experience in circuit design and communication systems. We focus on practical skills and real-world applications, preparing graduates for successful careers in the electronics industry. Our commitment to innovation and industry relevance ensures that students are equipped to meet the challenges of the evolving technology landscape.
+
+            </p>
+        </div>
+    </section>
+
+    <!-- Card Section -->
+    
+    <div class="latest-entries">
+        <h2>Department Achivements</h2>
+        {% if not latest_entries.empty %}
+        <div class="cards-container">
+            {% for entry in latest_entries.itertuples() %}
+            <div class="card">
+                <div class="card-img-holder">
+                    <img src="{{ url_for('static', filename='images/' ~ entry.Image) }}" alt="Blog image {{ loop.index }}">
+                </div>
+                <h3 class="blog-title">{{ entry.Heading }}</h3>
+                <span class="blog-time">{{ entry.Date }}</span>
+                <p class="description">{{ entry.Description }}</p>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <p>No entries available.</p>
+        {% endif %}
+    </div>
+
+
+    <!-- graphics cards -->
+    <div class="cards-container">
+        <div >
+            <div class="my-courses-box">
+              <div class="my-courses-item">
+                <a href="google.com" class="my-courses-item-link">
+                  <div class="my-courses-item-bg"></div>
+          
+                  <div class="my-courses-item-title">
+                    UI/Web&amp;Graph design for teenagers 11-17&#160;years old
+                  </div>
+          
+                  <div class="my-courses-item-date-box">
+                    Start:
+                    <span class="my-courses-item-date">
+                      04.11.2022
+                    </span>
+                  </div>
+                </a>
+              </div>
+          
+              <div class="my-courses-item">
+                <a href="#" class="my-courses-item-link">
+                  <div class="my-courses-item-bg"></div>
+          
+                  <div class="my-courses-item-title">
+                    UX/UI Web-Design&#160;+ Mobile Design
+                  </div>
+          
+                  <div class="my-courses-item-date-box">
+                    Start:
+                    <span class="my-courses-item-date">
+                      04.11.2022
+                    </span>
+                  </div>
+                </a>
+              </div>
+          
+              <div class="my-courses-item">
+                <a href="#" class="my-courses-item-link">
+                  <div class="my-courses-item-bg"></div>
+          
+                  <div class="my-courses-item-title">
+                    Annual package "Product+UX/UI+Graph designer&#160;2022"
+                  </div>
+          
+                  <div class="my-courses-item-date-box">
+                    Start:
+                    <span class="my-courses-item-date">
+                      04.11.2022
+                    </span>
+                  </div>
+                </a>
+              </div>
+          
+              <div class="my-courses-item">
+                <a href="#" class="my-courses-item-link">
+                  <div class="my-courses-item-bg"></div>
+          
+                  <div class="my-courses-item-title">
+                    Graphic Design
+                  </div>
+          
+                  <div class="my-courses-item-date-box">
+                    Start:
+                    <span class="my-courses-item-date">
+                      04.11.2022
+                    </span>
+                  </div>
+                </a>
+              </div>
+          
+              <div class="my-courses-item">
+                <a href="#" class="my-courses-item-link">
+                  <div class="my-courses-item-bg"></div>
+          
+                  <div class="my-courses-item-title">
+                    Motion Design
+                  </div>
+          
+                  <div class="my-courses-item-date-box">
+                    Start:
+                    <span class="my-courses-item-date">
+                      30.11.2022
+                    </span>
+                  </div>
+                </a>
+              </div>
+          
+              <div class="my-courses-item">
+                <a href="#" class="my-courses-item-link">
+                  <div class="my-courses-item-bg">
+                  </div>
+                  <div class="my-courses-item-title">
+                    Front-end development&#160;+ jQuery&#160;+ CMS
+                  </div>
+                </a>
+              </div>
+          
+              <div class="my-courses-item">
+                <a href="#" class="my-courses-item-link">
+                  <div class="my-courses-item-bg">
+                  </div>
+                  <div class="my-courses-item-title">
+                    Digital Marketing
+                  </div>
+                </a>
+              </div>
+          
+              <div class="my-courses-item">
+                <a href="#" class="my-courses-item-link">
+                  <div class="my-courses-item-bg"></div>
+          
+                  <div class="my-courses-item-title">
+                    Interior Design
+                  </div>
+          
+                  <div class="my-courses-item-date-box">
+                    Start:
+                    <span class="my-courses-item-date">
+                      31.10.2022
+                    </span>
+                  </div>
+                </a>
+              </div>
+          
+            </div>
+          </div>
+    </div>
+    <!-- Footer -->
+
+    <script>
+        const prevBtn = document.querySelector('.carousel-control.prev');
+        const nextBtn = document.querySelector('.carousel-control.next');
+        const container = document.querySelector('.carousel-container');
+        let index = 0;
+
+        function showSlide(newIndex) {
+            const slides = document.querySelectorAll('.carousel-slide');
+            const totalSlides = slides.length;
+
+            if (newIndex >= totalSlides) {
+                index = 0;
+            } else if (newIndex < 0) {
+                index = totalSlides - 1;
+            } else {
+                index = newIndex;
+            }
+
+            container.style.transform = `translateX(-${index * 100}%)`;
+        }
+
+        prevBtn.addEventListener('click', () => showSlide(index - 1));
+        nextBtn.addEventListener('click', () => showSlide(index + 1));
+
+        // Auto-slide functionality
+        setInterval(() => showSlide(index + 1), 5000); // Change slide every 5 seconds
+    </script>
+</body>
+</html>
+
+{% endblock %}

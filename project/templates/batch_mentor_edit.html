@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>User Registration</title>
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!-- Include Font Awesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        /* Custom CSS for the registration form */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        header {
+            text-align: center;
+            font-size: 2em;
+            margin-bottom: 20px;
+            color: #4a4a4a;
+        }
+        
+        .form {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .form .details {
+            margin-bottom: 20px;
+        }
+        .form .details .title {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            color: #4a4a4a;
+        }
+        .form .input-field {
+            position: relative;
+            margin-bottom: 15px;
+        }
+        .form .input-field label {
+            display: block;
+            margin-bottom: 5px;
+            color: #4a4a4a;
+        }
+        .form .input-field input[type="text"],
+        .form .input-field input[type="email"],
+        .form .input-field input[type="number"],
+        .form .input-field input[type="password"],
+        .form .input-field input[type="file"],
+        .form .input-field input[type="url"] {
+            width: calc(100% - 30px);
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .form .btn-custom {
+            background-color: #4a4a4a;
+            color: #ffffff;
+            border-radius: 5px;
+            padding: 10px 20px;
+            border: none;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            cursor: pointer;
+        }
+        .form .btn-custom:hover {
+            background-color: #ffa500;
+            transform: scale(1.05);
+        }
+        .form .btn-group {
+            text-align: center;
+        }
+        .form .row {
+            margin-bottom: 15px;
+        }
+        .form .input-field {
+            margin-bottom: 0;
+        }
+        .form .input-field input {
+            display: inline-block;
+            margin-right: 10px;
+        }
+        .form .input-field:nth-child(3n) {
+            margin-right: 0;
+        }
+        .form .profile-pic {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .form .profile-pic img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 2px solid #4a4a4a;
+        }
+        .form .login-message {
+            text-align: center;
+            margin-top: 20px;
+            color: #4a4a4a;
+        }
+        .form .login-message a {
+            color: #ffa500;
+            text-decoration: none;
+        }
+        .form .login-message a:hover {
+            text-decoration: underline;
+        }
+        /* Media queries for responsive design */
+        @media (max-width: 767px) {
+            .form {
+                padding: 20px;
+                margin: 10px;
+            }
+            .form .input-field {
+                width: 100%;
+                margin-bottom: 15px;
+            }
+            .form .input-field input {
+                width: calc(100% - 22px);
+                margin-right: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="heading">Update Profile</header>
+
+        <form action="{{ url_for('batch_mentor_edit') }}" method="POST" enctype="multipart/form-data">
+            <div class="form">
+                <div class="details personal">
+                    <span class="title">Personal Details</span>
+                    <div class="row">
+                        <div class="input-field col-sm-4">
+                            <label>Full Name</label>
+                            <input type="text" name="name" value="{{ student['name'] }}">
+                        </div>
+
+                        <div class="input-field col-sm-4">
+                            <label>Email</label>
+                            <input type="email" name="email" value="{{ student['email'] }}">
+                        </div>
+
+                        <div class="input-field col-sm-4">
+                            <label>Mobile Number</label>
+                            <input type="number" name="mobile" alue="{{ student['mobile'] }}">
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="details address">
+                    <span class="title">Address</span>
+
+                    <div class="row">
+                        <div class="input-field col-sm-4">
+                            <label>State</label>
+                            <input type="text" name="address" value="{{ student['address'] }}">
+                        </div>
+
+                        <div class="input-field col-sm-4">
+                            <label>District</label>
+                            <input type="text" name="district" value="{{ student['district'] }}">
+                        </div>
+
+                        <div class="input-field col-sm-4">
+                            <label>Sub-Division</label>
+                            <input type="text" name="subdivision" value="{{ student['subdivision'] }}">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field col-sm-4">
+                            <label>Country</label>
+                            <input type="text" name="country" value="{{ student['country'] }}">
+                        </div>
+
+                        <div class="input-field col-sm-4">
+                            <label>Pin</label>
+                            <input type="number" name="pin" value="{{ student['pin'] }}">
+                        </div>
+
+                        <div class="input-field col-sm-4">
+                            <label>Domestic</label>
+                            <input type="text" name="domestic" value="{{ student['domestic'] }}">
+                        </div>
+                    </div>
+
+                    
+                </div>
+
+                <div class="details professional">
+                    <span class="title">Professional Details</span>
+
+                    <div class="row">
+                        <div class="input-field col-sm-4">
+                            <label>Company</label>
+                            <input type="text" name="company" value="{{ student['company'] }}">
+                        </div>
+
+                        <div class="input-field col-sm-4">
+                            <label>Designation</label>
+                            <input type="text" name="designation" value="{{ student['designation'] }}">
+                        </div>
+
+                        <div class="input-field col-sm-4">
+                            <label>Sector</label>
+                            <input type="text" name="sector" value="{{ student['sector'] }}">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field col-sm-6">
+                            <label>Areawise</label>
+                            <input type="text" name="areawise" value="{{ student['areawise'] }}">
+                        </div>
+
+                        <div class="input-field col-sm-6">
+                            <label>International</label>
+                            <input type="text" name="international" value="{{ student['international'] }}">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="details social">
+                    <span class="title">Social Media</span>
+
+                    <div class="row">
+                        <div class="input-field col-sm-6">
+                            <label>LinkedIn</label>
+                            <input type="url" name="linkedin" value="{{ student['linkedin'] }}">
+                        </div>
+
+                        <div class="input-field col-sm-6">
+                            <label>Facebook</label>
+                            <input type="url" name="facebook" value="{{ student['facebook'] }}">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field col-sm-6">
+                            <label>Other</label>
+                            <input type="url" name="instagram" value="{{ student['instagram'] }}">
+                        </div>
+                    </div>
+
+                    <div class="btn-group">
+                
+                        <button type="submit" value="Update" class="btn btn-custom">Update</button>
+                    </div>
+
+                </div>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

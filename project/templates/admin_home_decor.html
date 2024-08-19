@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Home Decor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<style>
+    /* General Styles */
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f0f4f8;
+        color: #333;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        animation: fadeIn 1s ease-in-out;
+    }
+    
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+    
+    h1 {
+        color: #4a90e2;
+        margin-bottom: 20px;
+    }
+    
+    /* Back to Dashboard Button */
+    .back-button {
+        background-color: #4a90e2;
+        color: white;
+        text-decoration: none;
+        padding: 10px 15px;
+        border-radius: 5px;
+        margin-bottom: 20px;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+    
+    .back-button:hover {
+        background-color: #357ABD;
+        transform: scale(1.05);
+    }
+    
+    /* Form Styles */
+    form {
+        background-color: white;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        padding: 20px;
+        width: 100%;
+        max-width: 500px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        margin-bottom: 40px;
+        animation: slideIn 0.7s ease-in-out;
+    }
+    
+    @keyframes slideIn {
+        from { transform: translateY(-20px); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+    }
+    
+    label {
+        display: block;
+        margin-bottom: 5px;
+        color: #333;
+        font-weight: bold;
+    }
+    
+    input[type="file"],
+    input[type="text"],
+    input[type="date"],
+    textarea {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+    }
+    
+    button[type="submit"] {
+        background-color: #28b5b5;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+    
+    button[type="submit"]:hover {
+        background-color: #219f9f;
+        transform: scale(1.05);
+    }
+    
+    /* Latest Entries Section */
+    .latest-entries {
+        width: 100%;
+        max-width: 800px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+    
+    .latest-entries h2 {
+        color: #4a90e2;
+        margin-bottom: 20px;
+        text-align: center;
+        width: 100%;
+    }
+    
+    /* Card Styles */
+    .card {
+        background-color: white;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        padding: 15px;
+        margin-bottom: 20px;
+        text-align: center;
+        width: calc(33% - 20px); /* Adjust the width as per your layout */
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        animation: fadeInUp 0.7s ease-in-out;
+    }
+    
+    @keyframes fadeInUp {
+        from { transform: translateY(20px); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+    }
+    
+    .card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+    
+    .card-image {
+        width: 100%;
+        height: auto;
+        border-radius: 10px;
+        margin-bottom: 10px;
+    }
+    
+    .card-heading {
+        color: #333;
+        font-size: 1.2em;
+        margin-bottom: 10px;
+    }
+    
+    .card-description {
+        color: #666;
+        font-size: 0.9em;
+        margin-bottom: 10px;
+    }
+    
+    .card-date {
+        color: #999;
+        font-size: 0.8em;
+    }
+    
+</style>
+<body>
+    <h1>Admin Home Decor</h1>
+    <a href="{{ url_for('admin_dashboard') }}" class="back-button">Back to Dashboard</a>
+
+    <!-- Form to add new entry -->
+    <form method="POST" enctype="multipart/form-data">
+        <label for="image">Image:</label>
+        <input type="file" name="image" id="image">
+
+        <label for="heading">Heading:</label>
+        <input type="text" name="heading" id="heading" required>
+
+        <label for="description">Description:</label>
+        <textarea name="description" id="description" required></textarea>
+
+        <label for="date">Date:</label>
+        <input type="date" name="date" id="date" required>
+
+        <button type="submit">Add Entry</button>
+    </form>
+
+    <!-- Display the latest three entries -->
+    <div class="latest-entries">
+        <h2>Latest Entries</h2>
+        {% if not latest_entries.empty %}
+            {% for entry in latest_entries.itertuples() %}
+                <div class="card">
+                    <img src="{{ url_for('static', filename='images/' ~ entry.Image) }}" alt="Image" class="card-image">
+                    <h3 class="card-heading">{{ entry.Heading }}</h3>
+                    <p class="card-description">{{ entry.Description }}</p>
+                    <p class="card-date">{{ entry.Date }}</p>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No entries available.</p>
+        {% endif %}
+    </div>
+</body>
+</html>

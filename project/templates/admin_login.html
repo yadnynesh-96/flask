@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+{% block content %}    
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!-- Include Font Awesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        /* Custom CSS for the login form */
+        .login-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f5f5f5;
+        }
+        .login-form {
+            width: 100%;
+            max-width: 400px;
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .login-form h2 {
+            margin: 20px 0;
+        }
+        .form-control {
+            min-height: 38px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            padding-left: 40px;
+        }
+        .form-group {
+            position: relative;
+        }
+        .form-group i {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+        }
+        .btn-custom {
+            background-color: #4a4a4a;
+            color: #ffffff;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+            width: 100%;
+        }
+        .btn-custom:hover {
+            background-color: #ffa500;
+            color: #ffffff;
+            transform: scale(1.05);
+        }
+        .login-form .hint-text {
+            color: #999;
+            padding-bottom: 15px;
+        }
+        .login-form .checkbox-inline,
+        .login-form .forgot-link {
+            color: #4a4a4a;
+        }
+        .login-form .checkbox-inline:hover,
+        .login-form .forgot-link:hover {
+            color: #ffa500;
+        }
+        .admin-icon {
+            font-size: 50px;
+            color: #4a4a4a;
+        }
+        /* Media queries for responsive design */
+        @media (max-width: 767px) {
+            .login-form {
+                padding: 20px;
+                margin: 10px;
+            }
+        }
+    </style>
+</head>
+
+    <!-- Admin Login Form -->
+
+    <form method="post" action="{{ url_for('admin_login') }}" class="login-container">
+        <div class="login-form">
+            <i class="fa fa-user-circle admin-icon" aria-hidden="true"></i>
+            <h2 class="text-center">Admin Login</h2>       
+            <div class="form-group">
+                <i class="fa fa-envelope"></i>
+                <input type="email" name="email" class="form-control" placeholder="Email" required="required">
+            </div>
+            <div class="form-group">
+                <i class="fa fa-lock"></i>
+                <input type="password" name="password" class="form-control" placeholder="Password" required="required">
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-custom">Log in</button>
+            </div>
+            <div class="clearfix">
+                <a href="{{ url_for('admin_signup') }}" class="forgot-link pull-right">Forgot Password?</a>
+            </div>        
+            <p class="hint-text">Not an admin? <a href="{{ url_for('home') }}">Go to Home Page</a></p>
+        </div>
+    </form>
+
+    <!-- Include jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include Bootstrap JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    {% endblock %}

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Mentor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Edit Mentor</h1>
+    
+    <form method="POST">
+        <label for="full_name">Full Name:</label>
+        <input type="text" id="full_name" name="full_name" value="{{ mentor['Full Name'] }}" required>
+        
+        <label for="email">E-Mail:</label>
+        <input type="email" id="email" name="email" value="{{ mentor['E-Mail'] }}" required>
+        
+        <label for="contact_no">Contact No.:</label>
+        <input type="text" id="contact_no" name="contact_no" value="{{ mentor['Contact No.'] }}" required>
+        
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" value="{{ mentor['Password'] }}" required>
+        
+        <label for="batch_assigned">Batch Assigned:</label>
+        <input type="text" id="batch_assigned" name="batch_assigned" value="{{ mentor['Batch Assigned'] }}" required>
+        
+        <button type="submit">Update</button>
+    </form>
+    
+    <a href="{{ url_for('view_mentors') }}" class="button">Back to View Mentors</a>
+</body>
+</html>
